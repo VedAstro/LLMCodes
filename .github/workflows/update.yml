@@ -1,0 +1,25 @@
+name: Copy LLMCoder folder from VedAstro repo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  copy-folder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+
+      - name: Copy LLMCoder folder from VedAstro repo
+        run: |
+          git clone https://github.com/VedAstro/VedAstro.git
+          cp -r VedAstro/LLMCoder .
+          rm -rf VedAstro
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Copied LLMCoder folder from VedAstro repo"
+          git push origin main
